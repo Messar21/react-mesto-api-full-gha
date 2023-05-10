@@ -1,0 +1,10 @@
+.elements__about {
+    color: #000000;
+    margin: 22px 21px 22px 21px;
+    display: grid;
+    grid-template-areas:
+    "name like"
+    "name like-count";
+    grid-template-columns: 75% auto;
+    align-items: flex-start;
+}

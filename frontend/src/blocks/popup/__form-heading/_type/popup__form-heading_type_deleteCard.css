@@ -1,0 +1,9 @@
+.popup__form-heading_type_deleteCard {
+    margin: 0 0 25px;
+}
+
+@media screen and (max-width: 610px) {
+    .popup__form-heading_type_deleteCard {
+        margin: 0 0 25px;
+    }
+}

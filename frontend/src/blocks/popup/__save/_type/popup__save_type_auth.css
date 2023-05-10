@@ -1,0 +1,9 @@
+.popup__save_type_auth {
+    margin-top: 186px;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+.popup__save_type_auth:hover {
+    opacity: 0.85;
+}
