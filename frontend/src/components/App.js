@@ -198,7 +198,7 @@ function App(){
                         <Route path="/sign-up" element={
                             <Register onRegister={onRegister} openInfoToolTip={openInfoToolTip}/>
                         } />
-                        <Route path="/" element={ loggedIn ? <Navigate to="/my-page" replace/> :
+                        <Route path="/*" element={ loggedIn ? <Navigate to="/my-page" replace/> :
                             <Navigate to="/sign-up" replace/> }/>
                     </Routes>
                     <Footer/>

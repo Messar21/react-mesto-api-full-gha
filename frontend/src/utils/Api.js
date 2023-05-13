@@ -5,7 +5,7 @@ class Api {
     }
 
     getInitialCards(){
-        return fetch(`${this._baseUrl}cards`, {
+        return fetch(`${this._baseUrl}/cards`, {
             method: 'GET',
             headers: this._headers,
         })
@@ -15,7 +15,7 @@ class Api {
     }
 
     getUserInfo(){
-        return fetch(`${this._baseUrl}users/me`, {
+        return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: this._headers
         })
@@ -25,7 +25,7 @@ class Api {
     }
 
     sendUserInfo(name, about){
-        return fetch(`${this._baseUrl}users/me`, {
+        return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -39,7 +39,7 @@ class Api {
     }
 
     setNewAvatar(link){
-        return fetch(`${this._baseUrl}users/me/avatar`, {
+        return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
@@ -53,7 +53,7 @@ class Api {
     }
 
     postNewCard(name, link){
-        return fetch(`${this._baseUrl}cards`, {
+        return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
@@ -67,7 +67,7 @@ class Api {
     }
 
     deleteCard(cardId){
-        return fetch(`${this._baseUrl}cards/${cardId}`, {
+        return fetch(`${this._baseUrl}/cards/${cardId}`, {
             method: "DELETE",
             headers: this._headers
         })
@@ -78,14 +78,14 @@ class Api {
     }
 
     changeLikeStatus(cardId, isLiked){
-        return isLiked ? fetch(`${this._baseUrl}cards/${cardId}/likes`, {
+        return isLiked ? fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
                     method: "DELETE",
                     headers: this._headers
                     })
                     .then(res => {
                         return this._getResponseData(res);
                     })
-                : fetch(`${this._baseUrl}cards/${cardId}/likes`, {
+                : fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
                     method: "PUT",
                     headers: this._headers
                     })
@@ -103,9 +103,8 @@ class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-58/',
+    baseUrl: 'http://84.252.128.243',
     headers: {
-        authorization: '5ad038d3-aff7-428b-9266-e12345a82aaa',
         'Content-Type': 'application/json'
     }
 });
