@@ -103,7 +103,7 @@ class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'https://84.252.128.243',
+    baseUrl: 'https://api.jutsio.nomoredomains.monster',
     headers: {
         'Content-Type': 'application/json'
     }

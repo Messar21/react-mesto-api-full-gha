@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://84.252.128.243';
+export const BASE_URL = 'https://api.jutsio.nomoredomains.monster';
 
 export const register = (password, email) => {
     return fetch(`${BASE_URL}/signup`, {
