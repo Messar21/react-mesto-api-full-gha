@@ -31,7 +31,7 @@ export const getContent = (jwt) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            "Authorization" : `Bearer ${jwt}`
+            'Authorization': `Bearer ${jwt}`
         }
     })
         .then((res) => {

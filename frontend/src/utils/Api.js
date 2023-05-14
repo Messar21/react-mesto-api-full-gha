@@ -105,6 +105,7 @@ class Api {
 export const api = new Api({
     baseUrl: 'https://api.jutsio.nomoredomains.monster',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     }
 });
