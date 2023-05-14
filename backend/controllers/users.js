@@ -72,24 +72,23 @@ const getAllUsers = (req, res, next) => {
     .catch(next);
 };
 
-const updateProfile = (req, res, next) => {
+const updateUser = (req, res, next, userItems) => {
   const { _id } = req.user;
-  const { name, about } = req.body;
-  User.findOneAndUpdate({ _id }, { $set: { name, about } }, { new: true, runValidators: true })
+  User.findOneAndUpdate({ _id }, { $set: { userItems } }, { new: true, runValidators: true })
     .then((user) => {
       res.status(httpStatus.OK).send(user);
     })
     .catch(next);
 };
 
+const updateProfile = (req, res, next) => {
+  const { name, about } = req.body;
+  updateUser(req, res, next, { name, about });
+};
+
 const updateAvatar = (req, res, next) => {
-  const { _id } = req.user;
   const { avatar } = req.body;
-  User.findOneAndUpdate({ _id }, { $set: { avatar } }, { new: true, runValidators: true })
-    .then((user) => {
-      res.status(httpStatus.OK).send(user);
-    })
-    .catch(next);
+  updateUser(req, res, next, avatar);
 };
 
 module.exports = {
