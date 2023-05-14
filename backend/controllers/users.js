@@ -73,8 +73,13 @@ const getAllUsers = (req, res, next) => {
 };
 
 const updateUser = (req, res, next, userItems) => {
+  console.log(userItems);
+  const { name, about, avatar } = userItems;
+  console.log(name, about, avatar);
   const { _id } = req.user;
-  User.findOneAndUpdate({ _id }, { $set: { userItems } }, { new: true, runValidators: true })
+  User.findOneAndUpdate({ _id }, {
+    $set: { name, about, avatar },
+  }, { new: true, runValidators: true })
     .then((user) => {
       res.status(httpStatus.OK).send(user);
     })
@@ -88,7 +93,7 @@ const updateProfile = (req, res, next) => {
 
 const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  updateUser(req, res, next, avatar);
+  updateUser(req, res, next, { avatar });
 };
 
 module.exports = {
