@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const Unauthorised = require('../utils/errors/unauth-error');
 
-const SECRET = 'mosthiddensecretofallsecrets';
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+const SECRET = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
 
 const auth = async (req, res, next) => {
   try {

@@ -30,7 +30,6 @@ const createUser = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  req.user = '';
   const { email, password } = req.body;
   User.findOne({ email }).select('+password')
     .then((user) => {
