@@ -4,6 +4,7 @@ const Unauthorised = require('../utils/errors/unauth-error');
 const SECRET = 'mosthiddensecretofallsecrets';
 
 const auth = async (req, res, next) => {
+  req.user = '';
   try {
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith('Bearer ')) {
