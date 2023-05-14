@@ -9,7 +9,7 @@ import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
 import {useEffect, useState} from "react";
-import {api} from "../utils/Api";
+import * as api from "../utils/Api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import AddPlacePopup from "./AddPlacePopup";
 import {Route, Routes, Navigate, useNavigate} from "react-router-dom";
@@ -30,7 +30,8 @@ function App(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        Promise.all([api.getUserInfo(), api.getInitialCards()])
+        const jwt = localStorage.getItem('jwt');
+        Promise.all([api.getUserInfo(jwt), api.getInitialCards(jwt)])
             .then(([user, data]) => {
                 setCurrentUser(user);
                 setCardsData(data);
@@ -68,8 +69,9 @@ function App(){
     }
 
     const handleCardLike = (card) => {
+        const jwt = localStorage.getItem('jwt');
         const isLiked = card.likes.some(i => i._id === currentUser._id);
-        api.changeLikeStatus(card._id, isLiked)
+        api.changeLikeStatus(card._id, isLiked, jwt)
             .then((newCard) => {
                 setCardsData((state) => state.map((c) => c._id === card._id ? newCard : c));
             })
@@ -79,7 +81,8 @@ function App(){
     }
 
     const handleCardDelete = (card) => {
-        api.deleteCard(card._id)
+        const jwt = localStorage.getItem('jwt');
+        api.deleteCard(card._id, jwt)
             .then(() => {
                 setCardsData((state) => state.filter((c) => c !== card));
             })
@@ -89,7 +92,8 @@ function App(){
     }
 
     const handleUpdateUser = (name, about) => {
-        api.sendUserInfo(name, about)
+        const jwt = localStorage.getItem('jwt');
+        api.sendUserInfo(name, about, jwt)
             .then((user) => {
                 setCurrentUser(user);
                 setIsEditProfilePopupOpen(false);
@@ -100,7 +104,8 @@ function App(){
     }
 
     const handleUpdateAvatar = (link) => {
-        api.setNewAvatar(link)
+        const jwt = localStorage.getItem('jwt');
+        api.setNewAvatar(link, jwt)
             .then((user) => {
                 setCurrentUser(user);
                 setIsEditAvatarPopupOpen(false);
@@ -111,7 +116,8 @@ function App(){
     }
 
     const handleAddPlaceSubmit = (name, link) => {
-        api.postNewCard(name, link)
+        const jwt = localStorage.getItem('jwt');
+        api.postNewCard(name, link, jwt)
             .then((newCard) => {
                 setCardsData([newCard, ...cardsData]);
                 setIsAddPlacePopupOpen(false);
@@ -138,8 +144,8 @@ function App(){
         return auth.authorize(password, email)
             .then((res) => {
                 if(res.token) {
-                    setLoggedIn(true);
                     localStorage.setItem('jwt', res.token);
+                    setLoggedIn(true);
                 }
             })
     }
@@ -149,17 +155,18 @@ function App(){
     }
 
     const checkToken = (jwt) => {
-            auth.getContent(jwt)
-                .then((res) => {
-                    if(res) {
-                        setLoggedIn(true);
-                        setUserEmail(res.email);
-                        setCurrentUser(res);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        Promise.all([api.getUserInfo(jwt), api.getInitialCards(jwt)])
+            .then(([user, data]) => {
+                if ([user, data]){
+                    setUserEmail(user.email);
+                    setCurrentUser(user);
+                    setCardsData(data);
+                    setLoggedIn(true);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
 

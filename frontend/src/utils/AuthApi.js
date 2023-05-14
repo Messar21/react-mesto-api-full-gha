@@ -26,19 +26,6 @@ export const authorize = (password, email) => {
         })
 };
 
-export const getContent = (jwt) => {
-    return fetch(`${BASE_URL}/users/me`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
-        }
-    })
-        .then((res) => {
-            return getResponseData(res)
-        })
-}
-
 function getResponseData(res){
     if(!res.ok) {
         return Promise.reject(`Что-то пошло не так: ${res.status} ${res.statusText}`);
