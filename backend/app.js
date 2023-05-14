@@ -22,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(requestLogger); // Логер запросов
 
-app.use(auth);
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -39,6 +38,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
+app.use(auth);
 app.use('/', router);
 
 app.use(errorLogger); // Логер ошибок
