@@ -73,9 +73,7 @@ const getAllUsers = (req, res, next) => {
 };
 
 const updateUser = (req, res, next, userItems) => {
-  console.log(userItems);
   const { name, about, avatar } = userItems;
-  console.log(name, about, avatar);
   const { _id } = req.user;
   User.findOneAndUpdate({ _id }, {
     $set: { name, about, avatar },
