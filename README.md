@@ -3,7 +3,7 @@
 
 ## Ссылки на проект
 
-IP 84.252.128.243
+IP 51.250.91.201
 
 Frontend https://jutsio.nomoredomains.monster
 
